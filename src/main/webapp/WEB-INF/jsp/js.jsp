@@ -9,10 +9,15 @@
 %>
 <link rel="stylesheet"
 	href="${basePath }resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${basePath }resources/css/bootstrap-table.css">
 <link rel="stylesheet"
 	href="${basePath }resources/css/bootstrap-theme.min.css" />
-<script src="${basePath }resources/js/jquery-1.12.3.min.js"></script>
+<script src="${basePath }resources/js/jquery-1.12.4.min.js"></script>
+<script src="${basePath }resources/js/jquery-1.12.4.js"></script>
 <script src="${basePath }resources/js/bootstrap.min.js"></script>
+<script src="${basePath }resources/js/bootstrap-table.js"></script>
+<!-- put your locale files after bootstrap-table.js -->
+<script src="${basePath }resources/js/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
 	var base = '${basePath }';
 </script>
