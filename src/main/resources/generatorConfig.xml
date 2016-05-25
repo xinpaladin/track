@@ -23,8 +23,8 @@
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
-		<sqlMapGenerator targetPackage="cn.xjtu.track.mapper"
-			targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
@@ -33,11 +33,11 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="data_detail" domainObjectName="DataDetail"
+		<!-- <table tableName="data_detail" domainObjectName="DataDetail"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<!--<columnRenamingRule searchString="^D_" replaceString=""/> -->
+			<columnRenamingRule searchString="^D_" replaceString=""/>
 			<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" />
 		</table>
 		<table tableName="data_item" domainObjectName="DataItem"
@@ -52,7 +52,17 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			
-			<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" />
+			<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" /> 
+		</table>-->
+		
+		
+		<table tableName="data_origin" domainObjectName="DataOrigin"
+			
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			
+			<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" /> 
 		</table>
 	</context>
 </generatorConfiguration>

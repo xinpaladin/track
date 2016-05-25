@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xjtu.track.dao.DataItemMapper">
+	<resultMap id="BaseResultMap" type="cn.xjtu.track.entity.DataItem">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="driver_name" jdbcType="VARCHAR" property="driverName" />
+		<result column="file_name" jdbcType="VARCHAR" property="fileName" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="is_available" jdbcType="BIT" property="isAvailable" />
+		<result column="is_tran_baidu" jdbcType="BIT" property="isTranBaidu" />
+		<result column="comfortable" jdbcType="VARCHAR" property="comfortable" />
+		<result column="speed" jdbcType="VARCHAR" property="speed" />
+		<result column="locus" jdbcType="VARCHAR" property="locus" />
+		<result column="overall_eval" jdbcType="VARCHAR" property="overallEval" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, driver_name, file_name, type, is_available,
+		is_tran_baidu,
+		comfortable, speed,
+		locus, overall_eval
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from data_item
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="getItemCount" parameterType="cn.xjtu.track.entity.DataItem"
+		resultType="java.lang.Long">
+		select count(*) from data_item
+		where 1 = 1
+		<if test="driverName !=null and driverName !=''">
+			And driver_name = #{driverName,jdbcType=VARCHAR}
+		</if>
+		<if test="type !=null and type !=''">
+			And type = #{type,jdbcType=INTEGER}
+		</if>
+		<if test="isAvailable !=null and isAvailable !=''">
+			And is_available = #{isAvailable,jdbcType=BIT}
+		</if>
+		<if test="comfortable !=null and comfortable !=''">
+			And comfortable = #{comfortable,jdbcType=INTEGER}
+		</if>
+		<if test="speed !=null and speed !=''">
+			And speed = #{speed,jdbcType=INTEGER}
+		</if>
+		<if test="locus !=null and locus !=''">
+			And locus = #{locus,jdbcType=INTEGER}
+		</if>
+		<if test="overallEval !=null and overallEval !=''">
+			And overall_eval = #{overallEval,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="selectByDataItem" resultMap="BaseResultMap"
+		parameterType="cn.xjtu.track.entity.DataItem">
+		select
+		<include refid="Base_Column_List" />
+		from data_item
+		where 1=1
+		<if test="driverName !=null and driverName !=''">
+			And driver_name = #{driverName,jdbcType=VARCHAR}
+		</if>
+		<if test="type !=null and type !=''">
+			And type = #{type,jdbcType=INTEGER}
+		</if>
+		<if test="isAvailable !=null and isAvailable !=''">
+			And is_available = #{isAvailable,jdbcType=BIT}
+		</if>
+		<if test="comfortable !=null and comfortable !=''">
+			And comfortable = #{comfortable,jdbcType=INTEGER}
+		</if>
+		<if test="speed !=null and speed !=''">
+			And speed = #{speed,jdbcType=INTEGER}
+		</if>
+		<if test="locus !=null and locus !=''">
+			And locus = #{locus,jdbcType=INTEGER}
+		</if>
+		<if test="overallEval !=null and overallEval !=''">
+			And overall_eval = #{overallEval,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		data_item
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="cn.xjtu.track.entity.DataItem"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into data_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="driverName != null">
+				driver_name,
+			</if>
+			<if test="fileName != null">
+				file_name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="isAvailable != null">
+				is_available,
+			</if>
+			<if test="isTranBaidu != null">
+				is_tran_baidu,
+			</if>
+			<if test="comfortable != null">
+				comfortable,
+			</if>
+			<if test="speed != null">
+				speed,
+			</if>
+			<if test="locus != null">
+				locus,
+			</if>
+			<if test="overallEval != null">
+				overall_eval,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="driverName != null">
+				#{driverName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null">
+				#{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="isAvailable != null">
+				#{isAvailable,jdbcType=BIT},
+			</if>
+			<if test="isTranBaidu != null">
+				#{isTranBaidu,jdbcType=BIT},
+			</if>
+			<if test="comfortable != null">
+				#{comfortable,jdbcType=VARCHAR},
+			</if>
+			<if test="speed != null">
+				#{speed,jdbcType=VARCHAR},
+			</if>
+			<if test="locus != null">
+				#{locus,jdbcType=VARCHAR},
+			</if>
+			<if test="overallEval != null">
+				#{overallEval,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="cn.xjtu.track.entity.DataItem">
+		update data_item
+		<set>
+			<if test="driverName != null">
+				driver_name = #{driverName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null">
+				file_name = #{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="isAvailable != null">
+				is_available = #{isAvailable,jdbcType=BIT},
+			</if>
+			<if test="isTranBaidu != null">
+				is_tran_baidu = #{isTranBaidu,jdbcType=BIT},
+			</if>
+			<if test="comfortable != null">
+				comfortable = #{comfortable,jdbcType=VARCHAR},
+			</if>
+			<if test="speed != null">
+				speed = #{speed,jdbcType=VARCHAR},
+			</if>
+			<if test="locus != null">
+				locus = #{locus,jdbcType=VARCHAR},
+			</if>
+			<if test="overallEval != null">
+				overall_eval = #{overallEval,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+</mapper>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xjtu.track.dao.DataOriginMapper">
+  <resultMap id="BaseResultMap" type="cn.xjtu.track.entity.DataOrigin">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="syn_word1" jdbcType="VARCHAR" property="synWord1" />
+    <result column="syn_word2" jdbcType="VARCHAR" property="synWord2" />
+    <result column="frame_num" jdbcType="VARCHAR" property="frameNum" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="def_word1" jdbcType="VARCHAR" property="defWord1" />
+    <result column="def_word2" jdbcType="VARCHAR" property="defWord2" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="height" jdbcType="VARCHAR" property="height" />
+    <result column="vel_e" jdbcType="VARCHAR" property="velE" />
+    <result column="vel_n" jdbcType="VARCHAR" property="velN" />
+    <result column="vel_u" jdbcType="VARCHAR" property="velU" />
+    <result column="roll" jdbcType="VARCHAR" property="roll" />
+    <result column="pitch" jdbcType="VARCHAR" property="pitch" />
+    <result column="course" jdbcType="VARCHAR" property="course" />
+    <result column="ali_time" jdbcType="VARCHAR" property="aliTime" />
+    <result column="ali_state_word" jdbcType="VARCHAR" property="aliStateWord" />
+    <result column="log_acce" jdbcType="VARCHAR" property="logAcce" />
+    <result column="lateral_acce" jdbcType="VARCHAR" property="lateralAcce" />
+    <result column="nor_acce" jdbcType="VARCHAR" property="norAcce" />
+    <result column="time_year" jdbcType="VARCHAR" property="timeYear" />
+    <result column="time_month" jdbcType="VARCHAR" property="timeMonth" />
+    <result column="time_day" jdbcType="VARCHAR" property="timeDay" />
+    <result column="time_hour" jdbcType="VARCHAR" property="timeHour" />
+    <result column="time_minute" jdbcType="VARCHAR" property="timeMinute" />
+    <result column="time_second" jdbcType="VARCHAR" property="timeSecond" />
+    <result column="effi_word" jdbcType="VARCHAR" property="effiWord" />
+    <result column="mag_vir" jdbcType="VARCHAR" property="magVir" />
+    <result column="check_sum" jdbcType="VARCHAR" property="checkSum" />
+    <result column="data_item_id" jdbcType="BIGINT" property="dataItemId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, syn_word1, syn_word2, frame_num, state, def_word1, def_word2, longitude, latitude, 
+    height, vel_e, vel_n, vel_u, roll, pitch, course, ali_time, ali_state_word, log_acce, 
+    lateral_acce, nor_acce, time_year, time_month, time_day, time_hour, time_minute, 
+    time_second, effi_word, mag_vir, check_sum, data_item_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data_origin
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByItemId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data_origin
+    where data_item_id = #{dataItemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from data_origin
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.xjtu.track.entity.DataOrigin" useGeneratedKeys="true" keyProperty="id">
+    insert into data_origin (syn_word1, syn_word2, 
+      frame_num, state, def_word1, 
+      def_word2, longitude, latitude, 
+      height, vel_e, vel_n, 
+      vel_u, roll, pitch, 
+      course, ali_time, ali_state_word, 
+      log_acce, lateral_acce, nor_acce, 
+      time_year, time_month, time_day, 
+      time_hour, time_minute, time_second, 
+      effi_word, mag_vir, check_sum, 
+      data_item_id)
+    values (#{synWord1,jdbcType=VARCHAR}, #{synWord2,jdbcType=VARCHAR}, 
+      #{frameNum,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{defWord1,jdbcType=VARCHAR}, 
+      #{defWord2,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{height,jdbcType=VARCHAR}, #{velE,jdbcType=VARCHAR}, #{velN,jdbcType=VARCHAR}, 
+      #{velU,jdbcType=VARCHAR}, #{roll,jdbcType=VARCHAR}, #{pitch,jdbcType=VARCHAR}, 
+      #{course,jdbcType=VARCHAR}, #{aliTime,jdbcType=VARCHAR}, #{aliStateWord,jdbcType=VARCHAR}, 
+      #{logAcce,jdbcType=VARCHAR}, #{lateralAcce,jdbcType=VARCHAR}, #{norAcce,jdbcType=VARCHAR}, 
+      #{timeYear,jdbcType=VARCHAR}, #{timeMonth,jdbcType=VARCHAR}, #{timeDay,jdbcType=VARCHAR}, 
+      #{timeHour,jdbcType=VARCHAR}, #{timeMinute,jdbcType=VARCHAR}, #{timeSecond,jdbcType=VARCHAR}, 
+      #{effiWord,jdbcType=VARCHAR}, #{magVir,jdbcType=VARCHAR}, #{checkSum,jdbcType=VARCHAR}, 
+      #{dataItemId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xjtu.track.entity.DataOrigin">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID() AS id
+    </selectKey>
+    insert into data_origin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="synWord1 != null">
+        syn_word1,
+      </if>
+      <if test="synWord2 != null">
+        syn_word2,
+      </if>
+      <if test="frameNum != null">
+        frame_num,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="defWord1 != null">
+        def_word1,
+      </if>
+      <if test="defWord2 != null">
+        def_word2,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="velE != null">
+        vel_e,
+      </if>
+      <if test="velN != null">
+        vel_n,
+      </if>
+      <if test="velU != null">
+        vel_u,
+      </if>
+      <if test="roll != null">
+        roll,
+      </if>
+      <if test="pitch != null">
+        pitch,
+      </if>
+      <if test="course != null">
+        course,
+      </if>
+      <if test="aliTime != null">
+        ali_time,
+      </if>
+      <if test="aliStateWord != null">
+        ali_state_word,
+      </if>
+      <if test="logAcce != null">
+        log_acce,
+      </if>
+      <if test="lateralAcce != null">
+        lateral_acce,
+      </if>
+      <if test="norAcce != null">
+        nor_acce,
+      </if>
+      <if test="timeYear != null">
+        time_year,
+      </if>
+      <if test="timeMonth != null">
+        time_month,
+      </if>
+      <if test="timeDay != null">
+        time_day,
+      </if>
+      <if test="timeHour != null">
+        time_hour,
+      </if>
+      <if test="timeMinute != null">
+        time_minute,
+      </if>
+      <if test="timeSecond != null">
+        time_second,
+      </if>
+      <if test="effiWord != null">
+        effi_word,
+      </if>
+      <if test="magVir != null">
+        mag_vir,
+      </if>
+      <if test="checkSum != null">
+        check_sum,
+      </if>
+      <if test="dataItemId != null">
+        data_item_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="synWord1 != null">
+        #{synWord1,jdbcType=VARCHAR},
+      </if>
+      <if test="synWord2 != null">
+        #{synWord2,jdbcType=VARCHAR},
+      </if>
+      <if test="frameNum != null">
+        #{frameNum,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defWord1 != null">
+        #{defWord1,jdbcType=VARCHAR},
+      </if>
+      <if test="defWord2 != null">
+        #{defWord2,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="velE != null">
+        #{velE,jdbcType=VARCHAR},
+      </if>
+      <if test="velN != null">
+        #{velN,jdbcType=VARCHAR},
+      </if>
+      <if test="velU != null">
+        #{velU,jdbcType=VARCHAR},
+      </if>
+      <if test="roll != null">
+        #{roll,jdbcType=VARCHAR},
+      </if>
+      <if test="pitch != null">
+        #{pitch,jdbcType=VARCHAR},
+      </if>
+      <if test="course != null">
+        #{course,jdbcType=VARCHAR},
+      </if>
+      <if test="aliTime != null">
+        #{aliTime,jdbcType=VARCHAR},
+      </if>
+      <if test="aliStateWord != null">
+        #{aliStateWord,jdbcType=VARCHAR},
+      </if>
+      <if test="logAcce != null">
+        #{logAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="lateralAcce != null">
+        #{lateralAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="norAcce != null">
+        #{norAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="timeYear != null">
+        #{timeYear,jdbcType=VARCHAR},
+      </if>
+      <if test="timeMonth != null">
+        #{timeMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="timeDay != null">
+        #{timeDay,jdbcType=VARCHAR},
+      </if>
+      <if test="timeHour != null">
+        #{timeHour,jdbcType=VARCHAR},
+      </if>
+      <if test="timeMinute != null">
+        #{timeMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="timeSecond != null">
+        #{timeSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="effiWord != null">
+        #{effiWord,jdbcType=VARCHAR},
+      </if>
+      <if test="magVir != null">
+        #{magVir,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSum != null">
+        #{check_sum,jdbcType=VARCHAR},
+      </if>
+      <if test="dataItemId != null">
+        #{dataItemId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xjtu.track.entity.DataOrigin">
+    update data_origin
+    <set>
+      <if test="synWord1 != null">
+        syn_word1 = #{synWord1,jdbcType=VARCHAR},
+      </if>
+      <if test="synWord2 != null">
+        syn_word2 = #{synWord2,jdbcType=VARCHAR},
+      </if>
+      <if test="frameNum != null">
+        frame_num = #{frameNum,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defWord1 != null">
+        def_word1 = #{defWord1,jdbcType=VARCHAR},
+      </if>
+      <if test="defWord2 != null">
+        def_word2 = #{defWord2,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="velE != null">
+        vel_e = #{velE,jdbcType=VARCHAR},
+      </if>
+      <if test="velN != null">
+        vel_n = #{velN,jdbcType=VARCHAR},
+      </if>
+      <if test="velU != null">
+        vel_u = #{velU,jdbcType=VARCHAR},
+      </if>
+      <if test="roll != null">
+        roll = #{roll,jdbcType=VARCHAR},
+      </if>
+      <if test="pitch != null">
+        pitch = #{pitch,jdbcType=VARCHAR},
+      </if>
+      <if test="course != null">
+        course = #{course,jdbcType=VARCHAR},
+      </if>
+      <if test="aliTime != null">
+        ali_time = #{aliTime,jdbcType=VARCHAR},
+      </if>
+      <if test="aliStateWord != null">
+        ali_state_word = #{aliStateWord,jdbcType=VARCHAR},
+      </if>
+      <if test="logAcce != null">
+        log_acce = #{logAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="lateralAcce != null">
+        lateral_acce = #{lateralAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="norAcce != null">
+        nor_acce = #{norAcce,jdbcType=VARCHAR},
+      </if>
+      <if test="timeYear != null">
+        time_year = #{timeYear,jdbcType=VARCHAR},
+      </if>
+      <if test="timeMonth != null">
+        time_month = #{timeMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="timeDay != null">
+        time_day = #{timeDay,jdbcType=VARCHAR},
+      </if>
+      <if test="timeHour != null">
+        time_hour = #{timeHour,jdbcType=VARCHAR},
+      </if>
+      <if test="timeMinute != null">
+        time_minute = #{timeMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="timeSecond != null">
+        time_second = #{timeSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="effiWord != null">
+        effi_word = #{effiWord,jdbcType=VARCHAR},
+      </if>
+      <if test="magVir != null">
+        mag_vir = #{magVir,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSum != null">
+        check_sum = #{checkSum,jdbcType=VARCHAR},
+      </if>
+      <if test="dataItemId != null">
+        data_item_id = #{dataItemId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xjtu.track.entity.DataOrigin">
+    update data_origin
+    set syn_word1 = #{synWord1,jdbcType=VARCHAR},
+      syn_word2 = #{synWord2,jdbcType=VARCHAR},
+      frame_num = #{frameNum,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      def_word1 = #{defWord1,jdbcType=VARCHAR},
+      def_word2 = #{defWord2,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      vel_e = #{velE,jdbcType=VARCHAR},
+      vel_n = #{velN,jdbcType=VARCHAR},
+      vel_u = #{velU,jdbcType=VARCHAR},
+      roll = #{roll,jdbcType=VARCHAR},
+      pitch = #{pitch,jdbcType=VARCHAR},
+      course = #{course,jdbcType=VARCHAR},
+      ali_time = #{aliTime,jdbcType=VARCHAR},
+      ali_state_word = #{aliStateWord,jdbcType=VARCHAR},
+      log_acce = #{logAcce,jdbcType=VARCHAR},
+      lateral_acce = #{lateralAcce,jdbcType=VARCHAR},
+      nor_acce = #{norAcce,jdbcType=VARCHAR},
+      time_year = #{timeYear,jdbcType=VARCHAR},
+      time_month = #{timeMonth,jdbcType=VARCHAR},
+      time_day = #{timeDay,jdbcType=VARCHAR},
+      time_hour = #{timeHour,jdbcType=VARCHAR},
+      time_minute = #{timeMinute,jdbcType=VARCHAR},
+      time_second = #{timeSecond,jdbcType=VARCHAR},
+      effi_word = #{effiWord,jdbcType=VARCHAR},
+      mag_vir = #{magVir,jdbcType=VARCHAR},
+      check_sum = #{checkSum,jdbcType=VARCHAR},
+      data_item_id = #{dataItemId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
