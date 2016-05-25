@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.xjtu.track.common.Result;
 import cn.xjtu.track.service.DataDetailService;
 import cn.xjtu.track.service.DataItemService;
+import cn.xjtu.track.service.DataOriginSerivice;
 
 @Controller
 @RequestMapping
@@ -20,15 +21,14 @@ public class IndexController {
 	@Autowired
 	private DataDetailService dataDetailService;
 	
+	@Autowired 
+	private DataOriginSerivice dataOriginSerivice;
+	
 	@RequestMapping("/index.html")
 	public String getIndex(){
 		
 		return "index";
 	}
 	
-	@RequestMapping("/insertData")
-	@ResponseBody
-	public Result insertData(String path){
-		return dataItemService.insertData(path);
-	}
+	
 }
