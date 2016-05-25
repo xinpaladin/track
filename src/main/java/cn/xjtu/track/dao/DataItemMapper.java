@@ -5,6 +5,7 @@ import java.util.List;
 import cn.xjtu.track.entity.DataItem;
 
 public interface DataItemMapper {
+	
     int deleteByPrimaryKey(Long id);
 
     int insert(DataItem record);
@@ -17,4 +18,5 @@ public interface DataItemMapper {
 
     int updateByPrimaryKey(DataItem record);
     
+    long getItemCount(DataItem record);
 }

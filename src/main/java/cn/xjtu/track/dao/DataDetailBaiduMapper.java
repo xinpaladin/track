@@ -1,5 +1,7 @@
 package cn.xjtu.track.dao;
 
+import java.util.List;
+
 import cn.xjtu.track.entity.DataDetailBaidu;
 
 public interface DataDetailBaiduMapper {
@@ -10,6 +12,8 @@ public interface DataDetailBaiduMapper {
     int insertSelective(DataDetailBaidu record);
 
     DataDetailBaidu selectByPrimaryKey(Long id);
+    
+    List<DataDetailBaidu> selectByItemId(Long dataItemId);
 
     int updateByPrimaryKeySelective(DataDetailBaidu record);
 

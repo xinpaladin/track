@@ -10,10 +10,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 import cn.xjtu.track.common.GridBean;
 import cn.xjtu.track.common.Result;
@@ -22,6 +26,7 @@ import cn.xjtu.track.dao.DataDetailMapper;
 import cn.xjtu.track.dao.DataItemMapper;
 import cn.xjtu.track.entity.DataDetail;
 import cn.xjtu.track.entity.DataItem;
+import cn.xjtu.track.service.DataDetailService;
 import cn.xjtu.track.service.DataItemService;
 
 @Component
@@ -32,6 +37,8 @@ public class DataItemServiceImpl implements DataItemService {
 
 	@Resource
 	private DataItemMapper dataItemMapper;
+	@Autowired
+	private DataDetailService dataDetailService;
 
 	@Transactional
 	public Result insertData(String path) {
@@ -67,30 +74,29 @@ public class DataItemServiceImpl implements DataItemService {
 					Iterator<String> iter = datas.iterator();
 					while (iter.hasNext()) {
 						String data = iter.next();
-						DataDetail detail = initDataDetail(data);
+						DataDetail detail = dataDetailService.initDataDetail(data);
 						detail.setDataItemId(item.getId());
 						dataDetailMapper.insertSelective(detail);
 					}
 				} catch (IOException e) {
-					System.out.println("未找到文件");
-					e.printStackTrace();
+					System.out.println("IO异常"+e.getMessage());
+				
 					return new Result(false, "未找到文件");
-				} finally {
+				} catch (Exception e) {
+					//插入异常
+					System.out.println("数据库操作异常："+e.getMessage());
+					return new Result(false, "数据库操作异常");
+				}finally {
 					try {
 						if (br != null)
 							br.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						System.out.println("bufferReader 关闭异常："+e.getMessage());
 					}
 				}
 			}
 		}
-		try {
-			if (br != null)
-				br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		return new Result(true, "");
 	}
 
@@ -129,40 +135,9 @@ public class DataItemServiceImpl implements DataItemService {
 		return null;
 	}
 
-	// 初始化DataDetail数据
-	public DataDetail initDataDetail(String data) {
-		DataDetail detail = new DataDetail();
-		String[] datas = data.split("  ");
-
-		detail.setLongitude(Double.parseDouble(datas[6]));// 经度
-		detail.setLatitude(Double.parseDouble(datas[7]));// 纬度
-		detail.setHeight(Integer.parseInt(datas[8]));// 高度
-
-		detail.setVelE(Double.parseDouble(datas[9]));// 东向速度
-		detail.setVelN(Double.parseDouble(datas[10]));// 北向速度
-		detail.setVelU(Double.parseDouble(datas[11]));// 天向速度
-
-		detail.setRoll(Double.parseDouble(datas[12]));// 横滚角
-		detail.setPitch(Double.parseDouble(datas[13]));// 俯仰角
-		detail.setCourse(Double.parseDouble(datas[14]));// 惯导航向角
-
-		detail.setLogAcce(Double.parseDouble(datas[17]));// 纵向加速度
-		detail.setLateralAcce(Double.parseDouble(datas[18]));// 横向加速度
-		detail.setNorAcce(Double.parseDouble(datas[19]));// 法向加速度
-
-		detail.setTimeYear(Integer.parseInt(datas[20]));// 北京时间年
-		detail.setTimeMonth(Integer.parseInt(datas[21]));// 北京时间月
-		detail.setTimeDay(Integer.parseInt(datas[22]));// 北京时间日
-		detail.setTimeHour(Integer.parseInt(datas[23]));// 北京时间时
-		detail.setTimeMinute(Integer.parseInt(datas[24]));// 北京时间分
-		detail.setTimeSecond(Double.parseDouble(datas[25]));// 北京时间秒
-		return detail;
-
-	}
-
 	@Override
 	public JSONArray getAllItemList() {
-
+		
 		return null;
 	}
 
@@ -197,12 +172,7 @@ public class DataItemServiceImpl implements DataItemService {
 		return result;
 	}
 
-	@Override
-	public GridBean getOnePageDataItemList(int page, int rows) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public List<DataItem> getDataItem(DataItem dataItem) {
 		List<DataItem> items = null;
@@ -224,5 +194,26 @@ public class DataItemServiceImpl implements DataItemService {
 			result = 0;
 		}
 		return result;
+	}
+
+	@Override
+	public GridBean getOnePageItemList(DataItem item , int page, int rows) {
+		PageHelper.startPage(page, rows);
+		List<DataItem> items = dataItemMapper.selectByDataItem(item);
+		int totalpage = ((Page<?>)items).getPages();
+		Long totalNum = ((Page<?>)items).getTotal();
+		
+		return new GridBean(page, totalpage, totalNum.intValue(), items);
+	}
+
+	@Override
+	public Long getItemCount(DataItem record) {
+		Long count = 0l;
+		try {
+			count = dataItemMapper.getItemCount(record);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return count;
 	}
 }
