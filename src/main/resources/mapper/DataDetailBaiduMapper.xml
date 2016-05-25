@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xjtu.track.dao.DataDetailBaiduMapper">
+  <resultMap id="BaseResultMap" type="cn.xjtu.track.entity.DataDetailBaidu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="data_item_id" jdbcType="BIGINT" property="dataItemId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, longitude, latitude, data_item_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data_detail_baidu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+   <select id="selectByItemId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data_detail_baidu
+    where data_item_id = #{dataItemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from data_detail_baidu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.xjtu.track.entity.DataDetailBaidu" useGeneratedKeys="true" keyProperty="id">
+
+    insert into data_detail_baidu (longitude, latitude, 
+      data_item_id)
+    values (#{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
+      #{dataItemId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xjtu.track.entity.DataDetailBaidu" useGeneratedKeys="true" keyProperty="id">
+  
+    insert into data_detail_baidu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+    
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="dataItemId != null">
+        data_item_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+     	
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="dataItemId != null">
+        #{dataItemId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xjtu.track.entity.DataDetailBaidu">
+    update data_detail_baidu
+    <set>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="dataItemId != null">
+        data_item_id = #{dataItemId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xjtu.track.entity.DataDetailBaidu">
+    update data_detail_baidu
+    set longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      data_item_id = #{dataItemId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
